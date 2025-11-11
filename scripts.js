@@ -28,11 +28,22 @@ function generateRandomInteger(min, max) {
 
 
 function generateRandomQuestion() {
-    let q = "";
-    for (let i = 0; i < INPUT_DIGIT_AMOUNT.value; i++) {
-        q += generateRandomInteger(0, 9)
-    }
-    return q
+    const t1 = INPUT_TEXT_1.value.trim();
+    const t2 = INPUT_TEXT_2.value.trim();
+
+    // Lista de palabras separadas por espacios
+    let words = [];
+
+    if (t1.includes(" ")) words.push(...t1.split(/\s+/));
+    else if (t1.length > 0) words.push(t1);
+
+    if (t2.includes(" ")) words.push(...t2.split(/\s+/));
+    else if (t2.length > 0) words.push(t2);
+
+    if (words.length === 0) return "palabra";
+
+    const index = Math.floor(Math.random() * words.length);
+    return words[index];
 }
 
 
