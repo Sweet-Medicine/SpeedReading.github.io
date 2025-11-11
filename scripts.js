@@ -28,11 +28,21 @@ function generateRandomInteger(min, max) {
 
 
 function generateRandomQuestion() {
-    let q = "";
-    for (let i = 0; i < INPUT_DIGIT_AMOUNT.value; i++) {
-        q += generateRandomInteger(0, 9)
-    }
-    return q
+    // palabras de los inputs
+    const words = [];
+
+    if (INPUT_TEXT_1.value.trim().length > 0)
+        words.push(...INPUT_TEXT_1.value.trim().split(/\s+/));
+
+    if (INPUT_TEXT_2.value.trim().length > 0)
+        words.push(...INPUT_TEXT_2.value.trim().split(/\s+/));
+
+    // si no hay palabras, genera una por defecto
+    if (words.length === 0) return "palabra";
+
+    // elegir palabra aleatoria
+    const index = Math.floor(Math.random() * words.length);
+    return words[index];
 }
 
 
@@ -40,6 +50,12 @@ function selectDifficulty(difficulty) {
     if (DIFFICULTY_SELECTION.value === "Metamarphosis") {
         INPUT_DIGIT_AMOUNT.value = 6
     }
+
+
+
+
+
+    
     if (DIFFICULTY_SELECTION.value === "Radioactive") {
         INPUT_DIGIT_AMOUNT.value = 7
     }
@@ -60,11 +76,10 @@ function playGame() {
     
 
 
-    word = generateRandomQuestion()
-    word.split('').forEach(character => {
-        const characterSpan = document.createElement('span')
-        characterSpan.innerText = character
-        QUESTION.appendChild(characterSpan)
+QUESTION.innerHTML = "";
+const span = document.createElement("span");
+span.innerText = word;
+QUESTION.appendChild(span);
     })
     let gameShow = accurateInterval(3000, function() {
         QUESTION.style.display = "inline"
@@ -83,21 +98,11 @@ function playGame() {
 }
 
 function rightOrWrong() {
-    for (var i = 0; i < arrayAnswer.length; i++) {
-        if (arrayAnswer[i].innerHTML !== arrayValue[i]) {
-            arrayAnswer[i].classList.add("incorrect")
-            arrayAnswer[i].classList.remove("correct")
-            correct = false
-            arrayAnswer[i].innerText = arrayValue[i]
-        } else {
-            arrayAnswer[i].classList.add("correct")
-            arrayAnswer[i].classList.remove("incorrect")
-        }
-        if (i === arrayAnswer.length - 1) {
-            arrayValue = undefined
-            endGame(correct)
-        }
-    }
+    const correctAnswer = word.toLowerCase().trim();
+    const userAnswer = ANSWER.value.toLowerCase().trim();
+
+    const ok = (correctAnswer === userAnswer);
+    endGame(ok);
 }
 
 
@@ -262,31 +267,9 @@ SUBMIT_FORM.addEventListener("click", (e) => {
 
 })
 
-SUBMIT_BUTTON.addEventListener("click", (e) => {
-
-    if (arrayValue === undefined || arrayValue.length !== word.length) {
-
-        let n = ""
-        for (let i = 0; i < word.length; ++i) {
-            n += 0
-
-        } //! tmp
-        ANSWER.value = n
-        SUBMIT_BUTTON.style.display = "none"
-        ANSWER.style.display = "none"
-        arrayAnswer = QUESTION.querySelectorAll("span")
-        arrayValue = ANSWER.value.split('')
-        rightOrWrong()
-    } else {
-        e.preventDefault()
-        SUBMIT_BUTTON.style.display = "none"
-        ANSWER.style.display = "none"
-        rightOrWrong()
-
-    }
-
-
-})
+SUBMIT_BUTTON.addEventListener("click", () => {
+    rightOrWrong();
+});
 
 
 
@@ -297,8 +280,7 @@ ANSWER.addEventListener("input", () => {
 })
 ANSWER.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
-        e.preventDefault()
-        SUBMIT_BUTTON.click()
+        e.preventDefault();
+        rightOrWrong();
     }
-
-})
+});
