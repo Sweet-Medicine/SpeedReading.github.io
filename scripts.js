@@ -66,11 +66,8 @@ function selectDifficulty(difficulty) {
 
 
 function playGame() {
+    // Limpiar respuesta y generar nueva palabra
     ANSWER.value = "";
-    ANSWER.style.display = "none";
-    SUBMIT_BUTTON.style.display = "none";
-
-    // Generar palabra aleatoria
     word = generateRandomQuestion();
 
     // Limpiar y mostrar la palabra
@@ -78,29 +75,21 @@ function playGame() {
     const span = document.createElement("span");
     span.innerText = word;
     QUESTION.appendChild(span);
-    QUESTION.style.display = "none";
 
-    // Mostrar palabra después de 3 segundos
-    let gameShow = accurateInterval(3000, function() {
-        QUESTION.style.display = "inline";
+    // Mostrar palabra por el tiempo definido
+    QUESTION.style.display = "inline";
+    SUBMIT_BUTTON.style.display = "none";
+    ANSWER.style.display = "none";
 
-        // Ocultar después del tiempo configurado
-        let gameHide = accurateInterval(Number(INPUT_LIFETIME.value), function() {
-            QUESTION.style.display = "none";
-
-            // Mostrar input y botón
-            let wait = accurateInterval(500, function() {
-                ANSWER.style.display = "inline";
-                ANSWER.focus();
-                SUBMIT_BUTTON.style.display = "inline";
-                wait.cancel();
-            });
-
-            gameHide.cancel();
-        });
-
-        gameShow.cancel();
-    });
+    // Ocultar palabra después del tiempo de vida
+    let showDuration = Number(INPUT_LIFETIME.value);
+    let hideTimeout = setTimeout(() => {
+        QUESTION.style.display = "none";
+        // Mostrar input y botón para responder
+        ANSWER.style.display = "inline";
+        ANSWER.focus();
+        SUBMIT_BUTTON.style.display = "inline";
+    }, showDuration);
 }
 
 function rightOrWrong() {
