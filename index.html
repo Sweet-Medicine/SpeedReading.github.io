@@ -24,75 +24,29 @@
                 <option value="25 wpm">25 wpm</option>
                 <option value="50 wpm">50 wpm</option>
             </select>
-<form autocomplete="off" id="FORM" class="form-container">
-    <div class="form-group">
-        <label for="INPUT_LIFETIME">Milliseconds</label>
-        <input
-            placeholder="Ej: 1000"
-            name="delay"
-            type="number"
-            class="inputNumber"
-            id="INPUT_LIFETIME"
-            required
-        >
-    </div>
+<form autocomplete="off" id="FORM">
+    <input 
+        placeholder="milliseconds" 
+        name="delay" 
+        type="number" 
+        class="inputNumber" 
+        id="INPUT_LIFETIME" 
+        required
+    >
 
-    <div class="form-group">
-        <label for="INPUT_DIGIT_AMOUNT">Digits</label>
-        <input
-            placeholder="Ej: 5"
-            name="amount"
-            type="number"
-            class="inputNumber"
-            id="INPUT_DIGIT_AMOUNT"
-            required
-        >
-    </div>
+    <input 
+        placeholder="digits" 
+        name="amount" 
+        type="number" 
+        class="inputNumber" 
+        id="INPUT_DIGIT_AMOUNT" 
+        required
+    >
 
-    <button type="submit" class="button-80" id="SUBMIT_FORM">Confirm</button>
+    <button type="submit" class="button-80" role="button" id="SUBMIT_FORM">
+        confirm
+    </button>
 </form>
-
-<style>
-    .form-container {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        max-width: 260px;
-    }
-
-    .form-group {
-        display: flex;
-        flex-direction: column;
-    }
-
-    label {
-        font-size: 0.9rem;
-        margin-bottom: 4px;
-        opacity: 0.85;
-    }
-
-    .inputNumber {
-        padding: 8px 10px;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-        font-size: 1rem;
-    }
-
-    .button-80 {
-        padding: 10px 14px;
-        border-radius: 10px;
-        background: #4b6cff;
-        border: none;
-        color: white;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: 0.15s ease;
-    }
-
-    .button-80:hover {
-        opacity: 0.8;
-    }
-</style>
         </div>
         <div id="GAME">
             <div id="QUESTION"></div>
