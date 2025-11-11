@@ -73,6 +73,8 @@ function selectDifficulty(difficulty) {
 
 function playGame() {
     ANSWER.value = "";
+    ANSWER.style.display = "none";
+    SUBMIT_BUTTON.style.display = "none";
 
     // generar palabra aleatoria
     word = generateRandomQuestion();
@@ -83,19 +85,27 @@ function playGame() {
     span.innerText = word;
     QUESTION.appendChild(span);
 
-    // intervalo que ya tenías
+    QUESTION.style.display = "none"; // empezar oculta
+
+    // mostrar palabra después de 3 segundos
     let gameShow = accurateInterval(3000, function() {
         QUESTION.style.display = "inline";
+
+        // ocultar palabra después del tiempo configurado
         let gameHide = accurateInterval(Number(INPUT_LIFETIME.value), function() {
             QUESTION.style.display = "none";
+
+            // mostrar input y botón
             let wait = accurateInterval(500, function() {
                 ANSWER.style.display = "inline";
                 ANSWER.focus();
                 SUBMIT_BUTTON.style.display = "inline";
                 wait.cancel();
             });
+
             gameHide.cancel();
         });
+
         gameShow.cancel();
     });
 }
