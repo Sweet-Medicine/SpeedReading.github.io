@@ -72,29 +72,32 @@ function selectDifficulty(difficulty) {
 
 
 function playGame() {
-    ANSWER.value = ""
-    
+    ANSWER.value = "";
 
+    // generar palabra aleatoria
+    word = generateRandomQuestion();
 
-QUESTION.innerHTML = "";
-const span = document.createElement("span");
-span.innerText = word;
-QUESTION.appendChild(span);
-    })
+    // mostrar palabra
+    QUESTION.innerHTML = "";
+    const span = document.createElement("span");
+    span.innerText = word;
+    QUESTION.appendChild(span);
+
+    // intervalo que ya tenías
     let gameShow = accurateInterval(3000, function() {
-        QUESTION.style.display = "inline"
+        QUESTION.style.display = "inline";
         let gameHide = accurateInterval(Number(INPUT_LIFETIME.value), function() {
-            QUESTION.style.display = "none"
+            QUESTION.style.display = "none";
             let wait = accurateInterval(500, function() {
-                ANSWER.style.display = "inline"
-                ANSWER.focus()
-                SUBMIT_BUTTON.style.display = "inline"
-                wait.cancel()
-            })
-            gameHide.cancel()
-        })
-        gameShow.cancel()
-    })
+                ANSWER.style.display = "inline";
+                ANSWER.focus();
+                SUBMIT_BUTTON.style.display = "inline";
+                wait.cancel();
+            });
+            gameHide.cancel();
+        });
+        gameShow.cancel();
+    });
 }
 
 function rightOrWrong() {
