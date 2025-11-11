@@ -47,8 +47,8 @@ function generateRandomQuestion() {
 
 
 function selectDifficulty(difficulty) {
-    if (DIFFICULTY_SELECTION.value === "Metamarphosis") {
-        INPUT_DIGIT_AMOUNT.value = 6
+    if (DIFFICULTY_SELECTION.value === "10 wpm") {
+        INPUT_DIGIT_AMOUNT.value = 10
     }
 
 
@@ -56,17 +56,11 @@ function selectDifficulty(difficulty) {
 
 
     
-    if (DIFFICULTY_SELECTION.value === "Radioactive") {
-        INPUT_DIGIT_AMOUNT.value = 7
+    if (DIFFICULTY_SELECTION.value === "25 wpm) {
+        INPUT_DIGIT_AMOUNT.value = 25
     }
-    if (DIFFICULTY_SELECTION.value === "Esper") {
-        INPUT_DIGIT_AMOUNT.value = 8
-    }
-    if (DIFFICULTY_SELECTION.value === "Amatsukami") {
-        INPUT_DIGIT_AMOUNT.value = 9
-    }
-    if (DIFFICULTY_SELECTION.value === "Kotoamatsukami") {
-        INPUT_DIGIT_AMOUNT.value = 10
+    if (DIFFICULTY_SELECTION.value === "50 wpm") {
+        INPUT_DIGIT_AMOUNT.value = 50
     }
 } // difficulty select
 
@@ -76,26 +70,25 @@ function playGame() {
     ANSWER.style.display = "none";
     SUBMIT_BUTTON.style.display = "none";
 
-    // generar palabra aleatoria
+    // Generar palabra aleatoria
     word = generateRandomQuestion();
 
-    // mostrar palabra
+    // Limpiar y mostrar la palabra
     QUESTION.innerHTML = "";
     const span = document.createElement("span");
     span.innerText = word;
     QUESTION.appendChild(span);
+    QUESTION.style.display = "none";
 
-    QUESTION.style.display = "none"; // empezar oculta
-
-    // mostrar palabra después de 3 segundos
+    // Mostrar palabra después de 3 segundos
     let gameShow = accurateInterval(3000, function() {
         QUESTION.style.display = "inline";
 
-        // ocultar palabra después del tiempo configurado
+        // Ocultar después del tiempo configurado
         let gameHide = accurateInterval(Number(INPUT_LIFETIME.value), function() {
             QUESTION.style.display = "none";
 
-            // mostrar input y botón
+            // Mostrar input y botón
             let wait = accurateInterval(500, function() {
                 ANSWER.style.display = "inline";
                 ANSWER.focus();
